@@ -3,6 +3,21 @@ import NoteContext from "../context/notes/NoteContext";
 import Noteitem from "./Noteitem";
 import AddAnote from "./AddAnote";
 import { useNavigate } from "react-router";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 1/2,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const Notes = () => {
     const context = useContext(NoteContext);
@@ -37,10 +52,11 @@ const Notes = () => {
   return (
     <>
     <AddAnote/>
-
+        
             <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
             </button>
+            
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -73,9 +89,9 @@ const Notes = () => {
                 </div>
             </div>
 
-            <div className="container my-3">
+            <div className="container">
                 <h2>You Notes</h2>
-                <div className="container mx-3"> 
+                <div className="container"> 
                 {notes.length===0 && 'No notes to display'}
                 </div>
                 {notes.map((note) => {

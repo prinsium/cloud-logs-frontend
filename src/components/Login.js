@@ -1,7 +1,17 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router';
 import { Link } from "react-router-dom";
-import image from "../images/logo192.png"
+import image from "../images/logo192.png";
+
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme();
 
 const Login = (props) => {
     const [credentials, setCredentials] = useState({email: "", password: ""}) 
@@ -34,38 +44,63 @@ const Login = (props) => {
     }
 
     return (
-        <section className="vh-100 m-5">
-            <div className="container-fluid h-custom">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                <div className="col-md-9 col-lg-6 col-xl-5">
-                    <image src={image} className="img-fluid" alt="Sample"/>
-                </div>
-      <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-    
-            <form  onSubmit={handleSubmit}>
-                
-                <div className="form-outline mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" aria-describedby="emailHelp" />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                <div className="form-outline mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" value={credentials.password} onChange={onChange} name="password" id="password" />
-                </div>
-
-                <div className="text-center text-lg-start mt-4 pt-2">
-                <button type="submit" className="btn btn-primary btn-block mb-4">Login</button>
-                </div>
+        <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+             <Box component="span" sx={{ p: 2}}>
+        <img src={image} className="img-fluid" width={'100px'} alt="LOGO"/>
+        </Box>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={credentials.email}
+              onChange={onChange}
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            /><div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={credentials.password}
+              onChange={onChange}
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button></Box>
                 <div className="text-center">
                   <Link aria-current="page" to='/Signup'>New User? Sign Up</Link>
-                  </div>
-            </form>
+                </div>
+                </Box>
+                </Container>
+    </ThemeProvider>
             
-      </div>
-    </div>
-</div>
-</section>
     )
 }
 

@@ -1,7 +1,17 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router';
 import { Link } from "react-router-dom";
+import image1 from "../images/logo192.png";
 
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme();
 
 const Signup = (props) => {
     const [credentials, setCredentials] = useState({name: "", email: "", password: "", confirmpassword: ""}) 
@@ -34,47 +44,84 @@ const Signup = (props) => {
     }
 
     return (
-        <section className="vh-100 m-5">
-            <div className="container-fluid h-custom">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                <div className="col-md-9 col-lg-6 col-xl-5">
-                    <img src="frontend-cloud-logs\src\images\clgs.svg"
-                    className="img-fluid" alt="Sample"/>
-                </div>
-      <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-
-
-            <form  onSubmit={handleSubmit}>
-            <div className="form-outline mb-3">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" onChange={onChange} id="name" name="name"/>
-                </div>
-                <div className="form-outline mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input type="email" className="form-control" onChange={onChange} id="email" name="email" aria-describedby="emailHelp" />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                <div className="form-outline mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" onChange={onChange} name="password" id="password" minLength={5} required/>
-                </div>
-                <div className="form-outline mb-3">
-                    <label htmlFor="confirmpassword" className="form-label">Password</label>
-                    <input type="password" className="form-control" onChange={onChange} name="confirmpassword" id="confirmpassword" minLength={5} required/>
-                </div>
-
-                <div className="text-center text-lg-start mt-4 pt-2">
-                <button type="submit" className="btn btn-primary btn-block mb-4">Sign Up</button>
-                </div>
-
+        <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 3,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+             <Box component="span" sx={{ p: 1}}>
+        <img src={image1} className="img-fluid" width={'100px'} alt="LOGO"/>
+        </Box>
+            <Typography component="h1" variant="h5">
+              Sign Up
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              onChange={onChange}
+              id="name"
+              label="name"
+              name="name"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              onChange={onChange}
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            /><div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              inputProps={{minLength: 5}}
+              onChange={onChange}
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              inputProps={{minLength: 5}}
+              onChange={onChange}
+              name="confirmpassword"
+              label="Confirm Password"
+              type="password"
+              id="confirmpassword"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button></Box>
                 <div className="text-center">
-                  <Link aria-current="page" to='/Login'>Existing User? Login</Link>
-                  </div>
-            </form>
-        </div>
-        </div>
-        </div>
-        </section>
+                  <Link aria-current="page" to='/Login'>Existing User? Sign In</Link>
+                </div>
+                </Box>
+                </Container>
+    </ThemeProvider>
     )
 }
 

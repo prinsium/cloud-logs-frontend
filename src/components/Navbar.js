@@ -1,7 +1,16 @@
-import React from 'react'
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
+import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
+
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import '../App.css'
+import image1 from "../images/logo192.png"
 
 export const Navbar = () => {
   let navigate = useNavigate();
@@ -10,30 +19,23 @@ export const Navbar = () => {
     navigate("/login")
   }
   return (
-  
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-  <div className="container-fluid">
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-          <Link className="nav-link active" aria-current="page" to='/Home'><b>Cloud-Logs</b></Link>
-        </li>
-        {/* <li className="nav-item">
-          <Link className="nav-link active" aria-current="page" to='/About'>About</Link>
-        </li> */}
-        </ul>
-        {!localStorage.getItem('token')?<form className="d-flex">
-    <Link type="button" class="btn btn-outline-secondary mx-2" aria-current="page" to='/Login'>Login</Link>
-    <Link type="button" class="btn btn-outline-info" aria-current="page" to='/Signup'>Sign Up</Link>
-    </form>: <button onClick={handleLogout} type="button" class="btn btn-outline-dark">Logout</button>}
-    </div>
-  </div>
-</nav>
+    <Box sx={{ flexGrow: 1 }}>
+    <AppBar position="static" color="default">
+      <Toolbar>
+      <Box component="span" sx={{ p: 2}}>
+      <img src={image1} className="img-fluid" width={'30px'} alt="LOGO"/>
+      </Box>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Cloud-Logs
+        </Typography>
+        {!localStorage.getItem('token')?
+        <IconButton component={Link} to={"/Login"}>
+          <PersonAddAltRoundedIcon />
+        </IconButton>:<IconButton onClick={handleLogout}><PersonRemoveRoundedIcon /></IconButton>}
+      </Toolbar>
+    </AppBar>
+  </Box>
   )
 }
-
 
 export default Navbar
