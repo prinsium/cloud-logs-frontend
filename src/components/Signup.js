@@ -47,12 +47,13 @@ const Signup = (props) => {
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box
+          <Box fullWidth
             sx={{
               marginTop: 3,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              m: 1
             }}
           >
              <Box component="span" sx={{ p: 1}}>
