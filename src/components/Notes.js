@@ -3,26 +3,26 @@ import NoteContext from "../context/notes/NoteContext";
 import Noteitem from "./Noteitem";
 import AddAnote from "./AddAnote";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
+import { TextField, Container, Typography, Button, Box, Modal, Fab, Stack } from '@mui/material';
 
-import { Stack, Typography } from "@mui/material";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+import { GrClose } from "react-icons/gr";
+
 import { CiFaceFrown } from 'react-icons/ci';
-import EditNote from "./EditNote";
+import NoteView from "./NoteView";
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 1/2,
+  width: 1,
+  height: 1,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
+
 
 const Notes = () => {
     const context = useContext(NoteContext);
@@ -36,23 +36,32 @@ const Notes = () => {
     }   // eslint-disable-next-line
     }, [])
 
+
     const ref = useRef(null)
     const refClose = useRef(null)
     const [note, setNote] = useState({id: "", etitle: "", edescription: "", etag: ""})
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const [selectedNoteId, setSelectedNoteId] = useState(null);
+
+    const handleNoteClick = (noteId) => {
+        setSelectedNoteId(noteId);
+    };
+
+    if (selectedNoteId !== null) {
+        return <NoteView key={note._id} note={note} />; 
+    }
 
     const updateNote = (currentNote) => {
         ref.current.click();
         setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag:currentNote.tag})
     }
 
-    const fetchNote = (currentNote) => {
-        ref.current.click();
-        setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag:currentNote.tag})
-    }
-
     const handleClick = (e)=>{
       editNote(note.id, note.etitle, note.edescription, note.etag)
-      refClose.current.click();
+      setOpen(false);
     }
 
     const onChange = (e)=>{
@@ -62,41 +71,71 @@ const Notes = () => {
   return (
     <>
     <AddAnote/>
-    <Button ref={ref} sx={{ mt: 3, mb: 2, alignItems: 'center' }} type="submit" variant="contained" color="primary" component={Link} to={"/EditNote"}>
-                
-            </Button>
+        
+    <button ref={ref} type="button" onClick={handleOpen} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
             
-            {/* <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Edit Note</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <form className="my-3">
-                                <div className="mb-3">
-                                    <label htmlFor="title" className="form-label">Title</label>
-                                    <input type="text" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange} minLength={5} required/>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="description" className="form-label">Description</label>
-                                    <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription} onChange={onChange} minLength={5} required/>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="tag" className="form-label">Tag</label>
-                                    <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
-                                </div>
- 
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button disabled={note.etitle.length<5 || note.edescription.length<5} onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+    <Modal
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="title"
+    aria-describedby="description"
+>
+    <Box sx={style}>
+
+        <Container maxWidth="lg">
+            <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
+                <Typography variant="h3" sx={{ flexGrow: 1, alignItems: 'center'}}>Edit Note</Typography>
+                <Fab size="small" color="default" aria-label="goback" onClick={handleClose}><GrClose /></Fab>
+            </Box>
+            
+        <div className='container mx-3 my-3'>
+      <Box component="form" sx={{ p: 1}} onSubmit={handleClick}>
+        <TextField
+          fullWidth
+          id="etitle"
+          name="etitle"
+          label="Title"
+          variant="standard"
+          size='normal'
+          value={note.etitle}
+          onChange={onChange}
+          rows={10}
+        />
+        <TextField
+          fullWidth
+          id="edescription"
+          name="edescription"
+          label="Description"
+          variant="standard"
+          size='small'
+          value={note.edescription}
+          onChange={onChange}
+          multiline
+          rows={10}
+        />
+        <TextField
+          fullWidth
+          id="etag"
+          name="etag"
+          label="Tags"
+          variant="standard"
+          size='small'
+          value={note.etag}
+          onChange={onChange}
+          multiline
+          rows={1}
+        />
+      </Box>
+       </div>
+
+        <div className="modal-footer">
+            <button disabled={note.etitle.length<5 || note.edescription.length<5} onClick={handleClick} type="button" className="btn btn-primary">UPDATE</button>
+        </div>
+    </Container>
+    </Box>
+    </Modal>
 
             {notes.length===0 ? (
             <Stack
@@ -110,7 +149,7 @@ const Notes = () => {
             </Stack>
             ) : (
                 notes.map((note) => {
-                    return <Noteitem key={note._id} fetchNote={fetchNote} updateNote={updateNote} note={note} />
+                    return <Noteitem key={note._id} onClick={() => handleNoteClick(note.id)} updateNote={updateNote} note={note} />
                 })
             )}
 

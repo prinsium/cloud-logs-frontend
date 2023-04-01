@@ -13,7 +13,7 @@ const Noteitem = (props) => {
   const navigate = useNavigate();
   const { notes, editNote } = context;
   const { deleteNote } = context;
-  const { note, updateNote, fetchNote } = props;
+  const { note, updateNote } = props;
   return (
     <div className="container justify-content-center">
     <div className='container mx-2 my-2'>
@@ -23,7 +23,7 @@ const Noteitem = (props) => {
           <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
           <Typography variant="h6" sx={{ flexGrow: 1}}>
             {note.title}</Typography>
-            <IconButton size="small" color="default" aria-label="view" onClick={()=>{fetchNote(note)}}>
+            <IconButton size="small" color="default" aria-label="view">
             <GrView />
           </IconButton>
           <IconButton size="small" color="default" aria-label="edit" onClick={()=>{updateNote(note)}}>

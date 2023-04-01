@@ -1,10 +1,8 @@
 import React, {useContext, useState} from 'react'
 import NoteContext from '../context/notes/NoteContext';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Fab from '@mui/material/Fab';
+import { TextField, Container, Typography, Button, Box, Modal, Fab } from '@mui/material';
+
+import { GrClose } from "react-icons/gr";
 import AddIcon from '@mui/icons-material/Add';
 
 const style = {
@@ -12,7 +10,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 1/2,
+  width: 1,
+  height: 1,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -26,6 +25,10 @@ const AddAnote = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const {addNote} = context;
+    
+    const closeNow = () => {
+      setOpen(false);
+    }
 
     const [note, setNote] = useState({title: "", description: "", tag: ""})
 
@@ -51,22 +54,54 @@ const AddAnote = () => {
           aria-describedby="description"
         >
           <Box sx={style}>
-          <div className="container my-3">
-            <h2>Add a Note</h2>
-            <form className="my-3">
-                <div className="mb-3">
-                    <input type="text" className="form-control form-control-lg" placeholder='Title' id="title" name="title" aria-describedby="emailHelp" value={note.title} onChange={onChange} minLength={5} required /> 
-                </div>
-                <div className="mb-3">
-                    <input type="text" className="form-control" placeholder='Description' rows="4" id="description" name="description" value={note.description} onChange={onChange} minLength={5} required />
-                </div>
-                <div className="mb-3">
-                    <input type="text" className="form-control form-control-sm" placeholder='Tags' id="tag" name="tag" value={note.tag} onChange={onChange} minLength={5} required />
-                </div>
-               
-                <button className="btn btn-primary" onClick={handleClick}>Add Note</button>
-            </form>
-        </div>
+        <Container maxWidth="lg">
+      <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
+         <Typography variant="h3" sx={{ flexGrow: 1, alignItems: 'center'}}>Add A Note</Typography>
+         <Fab size="small" color="default" aria-label="goback" onClick={closeNow}><GrClose /></Fab>
+    </Box>
+    <div className='container mx-3 my-3'>
+      <Box component="form" sx={{ p: 1}} onSubmit={handleClick}>
+        <TextField
+          fullWidth
+          id="title"
+          name="title"
+          label="Title"
+          variant="standard"
+          size='normal'
+          value={note.title}
+          onChange={onChange}
+          rows={10}
+        />
+        <TextField
+          fullWidth
+          id="description"
+          name="description"
+          label="Description"
+          variant="standard"
+          size='small'
+          value={note.description}
+          onChange={onChange}
+          multiline
+          rows={10}
+        />
+        <TextField
+          fullWidth
+          id="tag"
+          name="tag"
+          label="Tags"
+          variant="standard"
+          size='small'
+          value={note.tag}
+          onChange={onChange}
+          multiline
+          rows={1}
+        />
+        <Button sx={{ mt: 3, mb: 2, alignItems: 'center' }} type="submit" variant="contained" color="primary" onClick={handleClick}>
+          ADD
+        </Button>
+      </Box>
+      </div>
+      </Container>
           </Box>
         </Modal>
       </div>
