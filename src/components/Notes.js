@@ -38,24 +38,12 @@ const Notes = () => {
 
     const ref = useRef(null)
     const refClose = useRef(null)
-    // let noteData = props.note;
     const [note, setNote] = useState({id: "", etitle: "", edescription: "", etag: ""})
-    // const [mynote, setMynote] = useState(noteData)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const [selectedNoteId, setSelectedNoteId] = useState(null);
-
-    // const fetchNote = (currentNote) =>{
-    //     ref.current.click();
-    //     setMynote({id: currentNote._id, vtitle: currentNote.title, vdescription: currentNote.description, vtag:currentNote.tag}) 
-    // }
-
-    // const handleNoteClick = (v) => {
-    //     fetchNote(mynote.id, mynote.vtitle, mynote.vdescription, mynote.vtag)
-    //   setOpen(false);
-    // };
 
     const updateNote = (currentNote) => {
         ref.current.click();
@@ -75,57 +63,6 @@ const Notes = () => {
     <>
     <AddAnote/>
 
-    {/* Below code is for NoteView Modal */}
-            
-    {/* <Modal
-    open={open}
-    onClose={handleClose}
-    aria-labelledby="title"
-    aria-describedby="description"
->
-    <Box sx={style}>
-
-        <Container maxWidth="lg">
-            <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
-                <Fab size="small" color="default" aria-label="goback" onClick={handleClose}><GrClose /></Fab>
-            </Box>
-            
-        <div className='container mx-3 my-3'>
-      <Box component="form" sx={{ p: 1}} onSubmit={handleNoteClick}>
-        <TextField
-          fullWidth
-          id="etitle"
-          name="etitle"
-          label="Title"
-          variant="standard"
-          size='normal'
-          value={note.vtitle}
-        />
-        <TextField
-          fullWidth
-          id="edescription"
-          name="edescription"
-          label="Description"
-          variant="standard"
-          size='small'
-          value={note.vdescription}
-        />
-        <TextField
-          fullWidth
-          id="etag"
-          name="etag"
-          label="Tags"
-          variant="standard"
-          size='small'
-          value={note.vtag}
-        />
-      </Box>
-       </div>
-    </Container>
-    </Box>
-    </Modal> */}
-
-
     {/* Below code id for update note modal    */}
     <button ref={ref} type="button" onClick={handleOpen} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
@@ -138,7 +75,6 @@ const Notes = () => {
     aria-describedby="description"
 >
     <Box sx={style}>
-
         <Container maxWidth="lg">
             <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
                 <Typography variant="h3" sx={{ flexGrow: 1, alignItems: 'center'}}>Edit Note</Typography>
@@ -156,7 +92,8 @@ const Notes = () => {
           size='normal'
           value={note.etitle}
           onChange={onChange}
-          rows={10}
+          multiline
+          rows={2}
         />
         <TextField
           fullWidth
@@ -207,15 +144,6 @@ const Notes = () => {
                     return <Noteitem key={note._id} updateNote={updateNote} note={note} />
                 })
             )}
-
-            {/* <div className="container d-flex justify-content-center mt-3">
-                <div className="container d-flex justify-content-center">
-                {notes.length===0 && <CiFaceFrown size={200} />}
-                </div>
-                {notes.map((note) => {
-                    return <Noteitem key={note._id} updateNote={updateNote} note={note} />
-                })}
-            </div> */}
         </>
     )
 }

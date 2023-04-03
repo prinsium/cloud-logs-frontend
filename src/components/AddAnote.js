@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import NoteContext from '../context/notes/NoteContext';
-import { TextField, Container, Typography, Button, Box, Modal, Fab } from '@mui/material';
+import { TextField, Container, Typography, Button, Box, Modal, Fab} from '@mui/material';
 
 import { GrClose } from "react-icons/gr";
 import AddIcon from '@mui/icons-material/Add';
@@ -70,7 +70,8 @@ const AddAnote = () => {
           size='normal'
           value={note.title}
           onChange={onChange}
-          rows={10}
+          multiline
+          rows={2}
         />
         <TextField
           fullWidth

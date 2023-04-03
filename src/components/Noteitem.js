@@ -2,13 +2,11 @@ import React, { useContext, useState, useRef } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import { useNavigate } from "react-router-dom";
 
-import { Paper, Box, Typography, IconButton } from "@mui/material";
-import { GrView } from "react-icons/gr";
+import { Paper, Box, Typography, IconButton, TextField, Container, Button, Modal, Fab, Chip, Stack, Divider } from "@mui/material";
+import { GrView, GrClose } from "react-icons/gr";
+import {CgArrowsExpandRight} from "react-icons/cg"
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { TextField, Container, Button, Modal, Fab, Stack } from '@mui/material';
-
-import { GrClose } from "react-icons/gr";
 
 const style = {
   position: 'absolute',
@@ -49,106 +47,42 @@ const Noteitem = (props) => {
   return (
     <div className="container justify-content-center">
     <div className='container mx-2 my-2'>
-      <Paper elevation={6}>
-        <Box p={1}>
-          
+      <Paper elevation={4}>
+        <Box>
           <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
-          <Typography variant="h6" sx={{ flexGrow: 1}}>
+          <Typography variant="h6" sx={{flexGrow: 1, whiteSpace: 'nowrap', width: '50px', overflow: 'hidden', textOverflow: 'ellipsis'}}>
             {note.title}</Typography>
-            <IconButton size="small" color="default" aria-label="view" key={note._id} note={note} onClick={handleOpen}>
-            <GrView />
-          </IconButton>
+            <IconButton size="small" color="default" aria-label="view" title="view note" key={note._id} note={note} onClick={handleOpen}><CgArrowsExpandRight /></IconButton>
 
-        
-      <button ref={ref} type="button" onClick={handleOpen} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button ref={ref} type="button" onClick={handleOpen} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
     </button>
             
-    <Modal
-    open={open}
-    onClose={handleClose}
-    aria-labelledby="title"
-    aria-describedby="description"
->
+    <Modal open={open} onClose={handleClose} aria-labelledby="title" aria-describedby="description">
     <Box sx={style}>
 
         <Container maxWidth="lg">
             <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
-                <Typography variant="h3" sx={{ flexGrow: 1, alignItems: 'center'}}>{note.title}</Typography>
+            <Stack direction="row" spacing={1} sx={{ flexGrow: 1, alignItems: 'center'}}><Chip label={note.tag} /></Stack>
                 <Fab size="small" color="default" aria-label="goback" onClick={handleClose}><GrClose /></Fab>
             </Box>
             
         <div className='container mx-3 my-3'>
       <Box component="form" sx={{ p: 1}}>
-        <TextField
-          fullWidth
-          id="title"
-          name="title"
-          label="Title"
-          variant="standard"
-          size='normal'
-          value={note.title}
-        />
-        <TextField
-          fullWidth
-          id="description"
-          name="description"
-          label="Description"
-          variant="standard"
-          size='small'
-          value={note.description}
-        />
-        <TextField
-          fullWidth
-          id="tag"
-          name="tag"
-          label="Tags"
-          variant="standard"
-          size='small'
-          value={note.tag}
-        />
+        <h3 sx={{ my: 3, mx: 2 }}>{note.title}</h3>
+        <Divider variant="middle" />
+        <p sx={{ my: 3, mx: 2 }}>{note.description}</p>
       </Box>
       </div>
     </Container>
     </Box>
     </Modal>
 
-          {/* {modalOpen && (
-        <>
-        <button ref={ref} onClick={handleModalOpen} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        <IconButton size="small" color="default" aria-label="view" key={note._id} onClick={handleModalOpen}>
-            <GrView />
-          </IconButton>
-        </button>
-        
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">{note.title}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-              {note.description}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        </>
-        )} */}
-          <IconButton size="small" color="default" aria-label="edit" onClick={()=>{updateNote(note)}}>
-            <EditIcon />
-          </IconButton>
-          <IconButton size="small" color="default" aria-label="delete" onClick={()=>{deleteNote(note._id)}}>
-            <DeleteTwoToneIcon />
-          </IconButton>
+          <IconButton size="small" color="default" aria-label="edit" title="edit note" onClick={()=>{updateNote(note)}}><EditIcon /></IconButton>
+          <IconButton size="small" color="default" aria-label="delete" title="delete note" onClick={()=>{deleteNote(note._id)}}><DeleteTwoToneIcon /></IconButton>
           </Box>
-          <Box m={1} >
-          <Typography variant="p">
+          <Box Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }} >
+          <Typography variant="p" sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
             {note.description}</Typography>
         </Box>
         </Box>
