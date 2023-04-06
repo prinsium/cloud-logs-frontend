@@ -1,9 +1,11 @@
 import React, {useContext, useState} from 'react'
 import NoteContext from '../context/notes/NoteContext';
-import { TextField, Container, Typography, Button, Box, Modal, Fab} from '@mui/material';
+import { TextField, Container, Typography, Button, Box, Modal, Fab, IconButton} from '@mui/material';
+import { green } from '@mui/material/colors';
 
 import { GrClose } from "react-icons/gr";
 import AddIcon from '@mui/icons-material/Add';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 const style = {
   position: 'absolute',
@@ -16,6 +18,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll'
 };
 
 
@@ -56,7 +59,7 @@ const AddAnote = () => {
           <Box sx={style}>
         <Container maxWidth="lg">
       <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
-         <Typography variant="h3" sx={{ flexGrow: 1, alignItems: 'center'}}>Add A Note</Typography>
+         <Typography variant="h5" sx={{ flexGrow: 1, alignItems: 'center'}}>Add A Note</Typography>
          <Fab size="small" color="default" aria-label="goback" onClick={closeNow}><GrClose /></Fab>
     </Box>
     <div className='container mx-3 my-3'>
@@ -66,9 +69,10 @@ const AddAnote = () => {
           id="title"
           name="title"
           label="Title"
+          required
           variant="standard"
           size='normal'
-          value={note.title}
+          // value={note.title}
           onChange={onChange}
           multiline
           rows={2}
@@ -78,9 +82,10 @@ const AddAnote = () => {
           id="description"
           name="description"
           label="Description"
+          required
           variant="standard"
           size='small'
-          value={note.description}
+          // value={note.description}
           onChange={onChange}
           multiline
           rows={10}
@@ -92,14 +97,16 @@ const AddAnote = () => {
           label="Tags"
           variant="standard"
           size='small'
-          value={note.tag}
+          // value={note.tag}
           onChange={onChange}
           multiline
           rows={1}
         />
-        <Button sx={{ mt: 3, mb: 2, alignItems: 'center' }} type="submit" variant="contained" color="primary" onClick={handleClick}>
-          ADD
-        </Button>
+        <div className='d-flex justify-content-center mt-3 mb-3'>
+        <Fab disabled={note.title.length<5 || note.description.length<5} sx={{color: green[500] }} 
+        size="medium" type="submit" variant="contained" onClick={handleClick}>
+          <NoteAddIcon />
+        </Fab></div>
       </Box>
       </div>
       </Container>

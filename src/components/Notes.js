@@ -6,8 +6,9 @@ import { useNavigate } from "react-router";
 import { TextField, Container, Typography, Button, Box, Modal, Fab, Stack } from '@mui/material';
 
 import { GrClose } from "react-icons/gr";
-
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { CiFaceFrown } from 'react-icons/ci';
+import { green } from '@mui/material/colors';
 
 const style = {
   position: 'absolute',
@@ -20,6 +21,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll'
 };
 
 
@@ -77,7 +79,7 @@ const Notes = () => {
     <Box sx={style}>
         <Container maxWidth="lg">
             <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', p: 1 }}>
-                <Typography variant="h3" sx={{ flexGrow: 1, alignItems: 'center'}}>Edit Note</Typography>
+                <Typography variant="h5" sx={{ flexGrow: 1, alignItems: 'center'}}>Edit Note</Typography>
                 <Fab size="small" color="default" aria-label="goback" onClick={handleClose}><GrClose /></Fab>
             </Box>
             
@@ -122,8 +124,12 @@ const Notes = () => {
       </Box>
        </div>
 
+       <div className='d-flex justify-content-center mt-3 mb-3'>
         <div className="modal-footer">
-            <button disabled={note.etitle.length<5 || note.edescription.length<5} onClick={handleClick} type="button" className="btn btn-primary">UPDATE</button>
+        <Fab disabled={note.etitle.length<5 || note.edescription.length<5} sx={{color: green[500] }} 
+        size="medium" type="submit" variant="contained" onClick={handleClick}>
+              <NoteAddIcon /></Fab>
+        </div>
         </div>
     </Container>
     </Box>
